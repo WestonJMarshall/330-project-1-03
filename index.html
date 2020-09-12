@@ -1,1 +1,121 @@
-Wow
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Flower Power</title>
+    <link rel="stylesheet" href="styles/default-styles.css">
+    <script src = "src/wjmLIB.js"></script>
+	<script src = "src/index.js"></script>
+</head>
+<body>
+    <div id="body-wrapper">
+        <canvas id="canvas"></canvas>
+        <div id="details-wrapper">
+            <h1 id="project-title">Flower Power</h1>
+            <div id="tools">
+                
+                <div class="tool">
+                    <label for="generation-type">Generation Type:</label>
+                    <select name="generation-type" id="generation-type">
+                      <option value="Circle" selected="selected">Circle</option>
+                      <option value="Line">Line</option>
+                      <option value="Square">Square</option>
+                    </select>
+                    
+                <label for="divergence">Divergence:</label>
+                    <select name="divergence" id="divergence">
+                      <option value="137.5" selected="selected">137.5</option>
+                      <option value="7.5">7.5</option>
+                      <option value="75">75</option>
+                        <option value="750">750</option>
+                    </select>
+                
+                <label for="divergence-change">Divergence Change:</label>
+                    <select name="divergence-change" id="divergence-change">
+                      <option value="20000" selected="selected">20000</option>
+                      <option value="2000">2000</option>
+                      <option value="200">200</option>
+                    </select>
+                    
+                <label for="size-change">Size Change:</label>
+                    <select name="size-change" id="size-change">
+                      <option value="true" selected="selected">true</option>
+                      <option value="false">false</option>
+                    </select>
+                </div>
+                
+                <br>
+                <hr>
+                <br>
+                
+                <div class="tool">
+                    <label for="generation-speed-slider">Generation Speed:</label>
+                    <br>
+                    <input type="range" min="1" max="16" value="3" class="slider" id="generation-speed-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="y-multiplicity-slider">Y Multiplicity:</label>
+                    <br>
+                    <input type="range" min="1" max="8" value="3" class="slider" id="y-multiplicity-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="n-multiplicity-slider">N Multiplicity:</label>
+                    <br>
+                    <input type="range" min="1" max="8" value="3" class="slider" id="n-multiplicity-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="c-value-slider">C Value:</label>
+                    <br>
+                    <input type="range" min="1" max="200" value="4" class="slider" id="c-value-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="size-multiplier-slider">Size Multiplier:</label>
+                    <br>
+                    <input type="range" min="1" max="10" value="3" class="slider" id="size-multiplier-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="y-offset-slider">Y Offset:</label>
+                    <br>
+                    <input type="range" min="0" max="800" value="200" class="slider" id="y-offset-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="y-offset-intensity-slider">Y Offset Intensity Multiplier:</label>
+                    <br>
+                    <input type="range" min="-12" max="12" value="3" class="slider" id="y-offset-intensity-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="color-offset-slider">Color Offset:</label>
+                    <br>
+                    <input type="range" min="0" max="255" value="0" class="slider" id="color-offset-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="color-scale-slider">Color Scale:</label>
+                    <br>
+                    <input type="range" min="1" max="60" value="10" class="slider" id="color-scale-slider">
+                </div>
+                
+                <div class="tool">
+                    <label for="color-ramp-slider">Color Ramp:</label>
+                    <br>
+                    <input type="range" min="1" max="500" value="285" class="slider" id="color-ramp-slider">
+                </div>
+                
+                <br>
+                <hr>
+                
+            </div>
+            <div id="description">
+                <p>This is Flower Power!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
