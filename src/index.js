@@ -146,7 +146,7 @@ function sizeChanged()
 function updateDetailsPanel()
 {
     let details = document.querySelector("#details-wrapper");
-    details.style.width = `${window.innerWidth - canvasWidth - 54}px`;
+    details.style.width = `${window.innerWidth - canvasWidth - 74}px`;
     details.style.left = `${canvasWidth + 27}px`;
     details.style.height = `${canvasHeight - 27}px`;
 }
