@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Flower Power</title>
+	<title>Faux-llotaxis</title>
     <link rel="stylesheet" href="styles/default-styles.css">
     <script src = "src/wjmLIB.js"></script>
 	<script src = "src/index.js"></script>
@@ -11,7 +11,7 @@
     <div id="body-wrapper">
         <canvas id="canvas"></canvas>
         <div id="details-wrapper">
-            <h1 id="project-title">Flower Power</h1>
+            <h1 id="project-title">Faux-llotaxis</h1>
             <div id="tools">
                 
                 <div class="tool">
@@ -32,9 +32,10 @@
                 
                 <label for="divergence-change">Divergence Change:</label>
                     <select name="divergence-change" id="divergence-change">
-                      <option value="20000" selected="selected">20000</option>
+                      <option value="0" selected="selected">0</option>
                       <option value="2000">2000</option>
                       <option value="200">200</option>
+                      <option value="20">20</option>
                     </select>
                     
                 <label for="size-change">Size Change:</label>
@@ -69,7 +70,7 @@
                 <div class="tool">
                     <label for="c-value-slider">C Value:</label>
                     <br>
-                    <input type="range" min="1" max="200" value="4" class="slider" id="c-value-slider">
+                    <input type="range" min="1" max="200" value="68" class="slider" id="c-value-slider">
                 </div>
                 
                 <div class="tool">
@@ -87,7 +88,7 @@
                 <div class="tool">
                     <label for="y-offset-intensity-slider">Y Offset Intensity Multiplier:</label>
                     <br>
-                    <input type="range" min="-12" max="12" value="3" class="slider" id="y-offset-intensity-slider">
+                    <input type="range" min="-12" max="12" value="-1" class="slider" id="y-offset-intensity-slider">
                 </div>
                 
                 <div class="tool">
@@ -105,16 +106,21 @@
                 <div class="tool">
                     <label for="color-ramp-slider">Color Ramp:</label>
                     <br>
-                    <input type="range" min="1" max="500" value="285" class="slider" id="color-ramp-slider">
+                    <input type="range" min="1" max="255" value="255" class="slider" id="color-ramp-slider">
                 </div>
-                
-                <br>
-                <hr>
+                <hr id="bottom-rule">
                 
             </div>
+            
+            <div id="tooltip">
+            Test
+            </div>
+            
             <div id="description">
-                <p>This is Flower Power!</p>
+                <p>This is Faux-llotaxis! This tool uses the concept of <a href="https://en.wikipedia.org/wiki/Phyllotaxis"  target="_blank">Phyllotaxis</a> to generate all sorts of very unique shapes! This tool adds some functions that wouldn't make too much sense in real life, but they certainly look very cool. For example you can change how the points diverge outside of the typical phyllotaxis divergence function, such as changing how the points will move vertically and horizontally as the n, or iteration, value is increased over time.</p>
+                <p>Check out the documentation for this site <a href="https://docs.google.com/document/d/1-i82c-Q7SX2Qqyl9c2HqiClZHzPj8eg4y0lyMP2DizM/edit?usp=sharing"  target="_blank">here</a></p>
             </div>
+            
         </div>
     </div>
 </body>

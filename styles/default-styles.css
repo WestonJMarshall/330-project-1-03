@@ -5,16 +5,20 @@ body
     background: black;
     font-family: 'Gayathri', sans-serif;
     font-weight: 400;
+    overflow: hidden;
 }
+
 #body-wrapper
 {
     height: auto;
     background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
 }
+
 canvas
 {
     border: 3px solid lightBlue; 
 }
+
 #details-wrapper
 {
     position: absolute;
@@ -25,11 +29,40 @@ canvas
     margin-left: -3px;
     margin-top: -7px;
 }
+
 .tool
 {
     position: relative;
     left:10px;
 }
+
+#bottom-rule
+{
+    margin-top: -15px;
+}
+
+#tooltip
+{
+    position: absolute;
+    top:100px;
+    display: none;
+    background: black;
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+    padding: 10px;
+}
+
+#description
+{
+    overflow-y:hidden;
+    position: relative;
+    left:10px;
+    margin-top:-10px;
+    margin-right:10px;
+    font-size: 0.9em;
+}
+
 #project-title
 {
     color: aliceblue;
