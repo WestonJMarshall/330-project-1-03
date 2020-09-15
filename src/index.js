@@ -37,7 +37,23 @@ function loop(){
 }
 
 function drawPhyllotaxis(){
+    ctx.save();
+    
+    if(wjmPhylloData.fadeAway)
+    {
+        ctx.fillStyle = `rgba(0, 0, 0, 0.01)`;
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+    }
+    
     wjmPhylloData.n++;
+    
+    if(wjmPhylloData.shadows)
+    {
+        ctx.shadowOffsetX = 4;
+        ctx.shadowOffsetY = 4;
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.95)';
+    }
     
     if(wjmPhylloData.drawType === "Line")
     {
@@ -81,7 +97,7 @@ function drawPhyllotaxis(){
     let color = `hsl(${wjmPhylloData.n / wjmPhylloData.colorScale % wjmPhylloData.colorRamp + wjmPhylloData.colorOffset},100%,${50}%)`;
     let z = (wjmPhylloData.n / 200) % 5 * wjmPhylloData.sizeScale;
     
-    if(wjmPhylloData.sizeChange !== "true"){z = wjmPhylloData.sizeScale;}
+    if(!wjmPhylloData.sizeChange){z = wjmPhylloData.sizeScale;}
     
     if(wjmPhylloData.drawType === "Line")
     {
@@ -98,6 +114,8 @@ function drawPhyllotaxis(){
     {
         wjmLIB.drawRectangle(ctx,wjmPhylloData.x,wjmPhylloData.y,z,z,color);
     }
+    
+    ctx.restore();
 }
     
 function setupControls()
@@ -108,7 +126,13 @@ function setupControls()
     
     document.querySelector("#divergence-change").addEventListener('change', _ => { wjmPhylloData.divergenceChange = parseFloat(document.querySelector("#divergence-change").options[document.querySelector("#divergence-change").selectedIndex].value); valueChanged();});
     
-    document.querySelector("#size-change").addEventListener('change', _ => { wjmPhylloData.sizeChange = document.querySelector("#size-change").options[document.querySelector("#size-change").selectedIndex].value; valueChanged();});
+    document.querySelector("#presets").addEventListener('change', _ => { setPreset(parseInt(document.querySelector("#presets").options[document.querySelector("#presets").selectedIndex].value)); valueChanged();});
+    
+    document.querySelector("#size-change").addEventListener('click', _ => { wjmPhylloData.sizeChange = document.querySelector("#size-change").checked; valueChanged();});
+    
+    document.querySelector("#fade-away").addEventListener('click', _ => { wjmPhylloData.fadeAway = document.querySelector("#fade-away").checked; valueChanged();});
+    
+    document.querySelector("#shadow").addEventListener('click', _ => { wjmPhylloData.shadows = document.querySelector("#shadow").checked; valueChanged();});
     
     document.querySelector("#generation-speed-slider").oninput = (e) => { wjmPhylloData.generationSpeed = e.target.value; valueChanged(); setTooltip("How fast points are generated", wjmPhylloData.generationSpeed,document.querySelector("#generation-speed-slider").parentElement.offsetTop,document.querySelector("#generation-speed-slider").offsetLeft + document.querySelector("#generation-speed-slider").clientWidth + 25);};
     document.querySelector("#generation-speed-slider").onmouseover = (e) => { setTooltip("How fast points are generated", wjmPhylloData.generationSpeed,document.querySelector("#generation-speed-slider").parentElement.offsetTop,document.querySelector("#generation-speed-slider").offsetLeft + document.querySelector("#generation-speed-slider").clientWidth + 25);};
@@ -161,6 +185,92 @@ function valueChanged()
 function removeTooltip()
 {
     document.querySelector("#tooltip").style.display = "none";
+}
+    
+function setPreset(presetNum)
+{
+    let preset = wjmPresetOne;
+    switch(presetNum) {
+  case 1:
+    preset = wjmPresetOne;
+    break;
+  case 2:
+    preset = wjmPresetTwo;
+    break;
+  case 3:
+    preset = wjmPresetThree
+    break;
+  case 4:
+    preset = wjmPresetFour;
+    break;
+  default:
+    preset = wjmPresetOne;
+    }
+    
+    wjmPhylloData.c = preset.c;
+    wjmPhylloData.fadeAway = preset.fadeAway;
+    wjmPhylloData.shadows = preset.shadows;
+    wjmPhylloData.divergence = preset.divergence;
+    wjmPhylloData.divergenceChange = preset.divergenceChange;
+    wjmPhylloData.generationSpeed = preset.generationSpeed;
+    wjmPhylloData.colorScale = preset.colorScale;
+    wjmPhylloData.colorRamp = preset.colorRamp;
+    wjmPhylloData.colorOffset = preset.colorOffset;
+    wjmPhylloData.yMultiplicity = preset.yMultiplicity;
+    wjmPhylloData.nMultiplicity = preset.nMultiplicity;
+    wjmPhylloData.yOffset = preset.yOffset;
+    wjmPhylloData.yOffsetIntensity = preset.yOffsetIntensity;
+    wjmPhylloData.drawType = preset.drawType;
+    wjmPhylloData.sizeScale = preset.sizeScale;
+    wjmPhylloData.sizeChange = preset.sizeChange;
+    
+    setupToolVisuals();
+}
+    
+function setupToolVisuals()
+{
+    //Dropdown menus
+    
+    let tags = ["#generation-type","#divergence","#divergence-change"];
+    let values = [wjmPhylloData.drawType,wjmPhylloData.divergence,wjmPhylloData.divergenceChange]
+        
+    for(let j = 0; j < tags.length; j++)
+    {
+        for(let i = 0; i < document.querySelector(tags[j]).options.length; i++)
+        {
+            if(document.querySelector(tags[j]).options[i].value === values[j] || parseFloat(document.querySelector(tags[j]).options[i].value) === parseFloat(values[j]))
+            {
+                document.querySelector(tags[j]).options.selectedIndex = i;
+                break;
+            }
+        }
+    }
+        
+    //Check boxes
+    
+    tags = ["#size-change","#fade-away","#shadow"];
+    values = [wjmPhylloData.sizeChange,wjmPhylloData.fadeAway,wjmPhylloData.shadows]
+    
+    for(let j = 0; j < tags.length; j++)
+    {
+        document.querySelector(tags[j]).checked = values[j];
+    }
+    
+    //Sliders
+    
+    tags = ["#generation-speed-slider","#y-multiplicity-slider","#n-multiplicity-slider",
+            "#c-value-slider","#size-multiplier-slider","#y-offset-slider",
+            "#y-offset-intensity-slider","#color-offset-slider","#color-scale-slider","#color-ramp-slider"];
+    
+    values = [wjmPhylloData.generationSpeed,wjmPhylloData.yMultiplicity,wjmPhylloData.nMultiplicity,
+              wjmPhylloData.c,wjmPhylloData.sizeScale,wjmPhylloData.yOffset,
+              wjmPhylloData.yOffsetIntensity,wjmPhylloData.colorOffset,wjmPhylloData.colorScale,wjmPhylloData.colorRamp]
+    
+    for(let j = 0; j < tags.length; j++)
+    {
+        document.querySelector(tags[j]).value = values[j];
+    }
+    
 }
     
 function setTooltip(text, value, top, left)
