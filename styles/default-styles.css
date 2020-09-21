@@ -36,9 +36,42 @@ canvas
     left:10px;
 }
 
+.drop-down
+{
+  font-family: 'Gayathri', sans-serif;
+  font-size: 16px;
+  padding: 5px 1px 1px 7px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+option{
+  font-family: 'Gayathri', sans-serif;
+  width: 75px;
+  position: relative;
+  z-index: 50;
+  font-size: 1em;
+}
+
 #bottom-rule
 {
     margin-top: -15px;
+}
+
+#top-layout
+{
+    position: relative;
+    top:-60px;
+    margin-bottom: -55px;
+    left:7px;
+}
+
+#top-layout .tool
+{
+    position: relative;
+    top:0px;
+    left:0px;
 }
 
 #tooltip

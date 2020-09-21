@@ -10,132 +10,150 @@
 <body>
     <div id="body-wrapper">
         <canvas id="canvas"></canvas>
-        <div id="details-wrapper">
+        <main id="details-wrapper">
             <h1 id="project-title">Faux-llotaxis</h1>
-            <div id="tools">
-                
-                <div class="tool">
+            <section id="tools">
+                <table id="top-layout">
+                <tr>
+                <td>
+                <aside class="tool">
                     <label for="generation-type">Generation Type:</label>
-                    <select name="generation-type" id="generation-type">
+                    <select name="generation-type" id="generation-type" class="drop-down">
                       <option value="Circle" selected="selected">Circle</option>
                       <option value="Line">Line</option>
                       <option value="Square">Square</option>
                     </select>
-                &nbsp;&nbsp;&nbsp;
+                </aside>
+                </td>
+                <td>
+                <aside class="tool">
                 <label for="divergence">Divergence:</label>
-                    <select name="divergence" id="divergence">
+                    <select name="divergence" id="divergence" class="drop-down">
                       <option value="137.5" selected="selected">137.5</option>
                       <option value="7.5">7.5</option>
                       <option value="75">75</option>
                         <option value="750">750</option>
                     </select>
-                &nbsp;&nbsp;&nbsp;
+                </aside>
+                </td>
+                <td>
+                <aside class="tool">
                 <label for="divergence-change">Divergence Change:</label>
-                    <select name="divergence-change" id="divergence-change">
+                    <select name="divergence-change" id="divergence-change" class="drop-down">
                       <option value="0" selected="selected">0</option>
                       <option value="2000">2000</option>
                       <option value="200">200</option>
                       <option value="20">20</option>
                     </select>
-                &nbsp;&nbsp;&nbsp;
+                </aside>
+                </td>
+                <td>
+                <aside class="tool">
                 <label for="presets">Presets:</label>
-                    <select name="presets" id="presets">
+                    <select name="presets" id="presets" class="drop-down">
                       <option value="1" selected="selected">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>
+                      <option value="5">5</option>
                     </select>
-                    
+                </aside>
+                </td>
                 <br> 
                 <br>
-                    
+                </tr>
+                <tr>
+                <td>
                 <label for="size-change">Size Change:</label>
                 <input type="checkbox" name="size-change" id="size-change" checked>
-                &nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
                 <label for="fade-away">Fade Away:</label>
                 <input type="checkbox" name="fade-away" id="fade-away">
-                &nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
                 <label for="shadow">Shadows:</label>
                 <input type="checkbox" name="shadow" id="shadow">
-                    
-                </div>
+                </td>
+                </tr>
+                </table>
                 
                 <hr>
                 <br>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="generation-speed-slider">Generation Speed:</label>
                     <br>
                     <input type="range" min="1" max="32" value="3" class="slider" id="generation-speed-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="y-multiplicity-slider">Y Multiplicity:</label>
                     <br>
                     <input type="range" min="1" max="8" value="3" class="slider" id="y-multiplicity-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="n-multiplicity-slider">N Multiplicity:</label>
                     <br>
                     <input type="range" min="1" max="8" value="3" class="slider" id="n-multiplicity-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="c-value-slider">C Value:</label>
                     <br>
                     <input type="range" min="1" max="200" value="68" class="slider" id="c-value-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="size-multiplier-slider">Size Multiplier:</label>
                     <br>
                     <input type="range" min="1" max="10" value="3" class="slider" id="size-multiplier-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="y-offset-slider">Y Offset:</label>
                     <br>
                     <input type="range" min="0" max="800" value="400" class="slider" id="y-offset-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="y-offset-intensity-slider">Y Offset Intensity Multiplier:</label>
                     <br>
                     <input type="range" min="-12" max="12" value="-1" class="slider" id="y-offset-intensity-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="color-offset-slider">Color Offset:</label>
                     <br>
                     <input type="range" min="0" max="255" value="0" class="slider" id="color-offset-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="color-scale-slider">Color Scale:</label>
                     <br>
                     <input type="range" min="1" max="60" value="10" class="slider" id="color-scale-slider">
-                </div>
+                </aside>
                 
-                <div class="tool">
+                <aside class="tool">
                     <label for="color-ramp-slider">Color Ramp:</label>
                     <br>
                     <input type="range" min="1" max="255" value="255" class="slider" id="color-ramp-slider">
-                </div>
+                </aside>
                 <hr id="bottom-rule">
                 
-            </div>
+            </section>
             
-            <div id="tooltip">
-            Test
-            </div>
+            <mark id="tooltip">
+            temp
+            </mark>
             
-            <div id="description">
+            <article id="description">
                 <p>This is Faux-llotaxis! This tool uses the concept of <a href="https://en.wikipedia.org/wiki/Phyllotaxis"  target="_blank">Phyllotaxis</a> to generate all sorts of very unique shapes! This tool adds some functions that wouldn't make too much sense in real life, but they certainly look very cool. For example you can change how the points diverge outside of the typical phyllotaxis divergence function, such as changing how the points will move vertically and horizontally as the n, or iteration, value is increased over time.</p>
                 <p>Check out the documentation for this site <a href="https://docs.google.com/document/d/1-i82c-Q7SX2Qqyl9c2HqiClZHzPj8eg4y0lyMP2DizM/edit?usp=sharing"  target="_blank">here</a></p>
-            </div>
+            </article>
             
-        </div>
+        </main>
     </div>
 </body>
 </html>

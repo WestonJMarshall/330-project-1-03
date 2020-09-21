@@ -5,6 +5,9 @@ window.onload = init;
 
 let canvasWidth = 600, canvasHeight = 900;
 let ctx;
+const horizOffset = 25;
+const horizInset = 54;
+const vertInset = 27;
 
 function init(){
     
@@ -15,7 +18,7 @@ function init(){
     canvas.height = canvasHeight;
     window.addEventListener("resize", sizeChanged);
     
-    updateDetailsPanel();
+    wjmLIB.updateDetailsPanel(canvasWidth, canvasHeight, horizInset, vertInset);
     
     setupControls();
     
@@ -118,6 +121,7 @@ function drawPhyllotaxis(){
     ctx.restore();
 }
     
+//Add event listeners for all of the controls on the UI
 function setupControls()
 {
     document.querySelector("#generation-type").addEventListener('change', _ => { wjmPhylloData.drawType = document.querySelector("#generation-type").options[document.querySelector("#generation-type").selectedIndex].value; valueChanged();});
@@ -134,44 +138,44 @@ function setupControls()
     
     document.querySelector("#shadow").addEventListener('click', _ => { wjmPhylloData.shadows = document.querySelector("#shadow").checked; valueChanged();});
     
-    document.querySelector("#generation-speed-slider").oninput = (e) => { wjmPhylloData.generationSpeed = e.target.value; valueChanged(); setTooltip("How fast points are generated", wjmPhylloData.generationSpeed,document.querySelector("#generation-speed-slider").parentElement.offsetTop,document.querySelector("#generation-speed-slider").offsetLeft + document.querySelector("#generation-speed-slider").clientWidth + 25);};
-    document.querySelector("#generation-speed-slider").onmouseover = (e) => { setTooltip("How fast points are generated", wjmPhylloData.generationSpeed,document.querySelector("#generation-speed-slider").parentElement.offsetTop,document.querySelector("#generation-speed-slider").offsetLeft + document.querySelector("#generation-speed-slider").clientWidth + 25);};
+    document.querySelector("#generation-speed-slider").oninput = (e) => { wjmPhylloData.generationSpeed = e.target.value; valueChanged(); wjmLIB.setTooltip("How fast points are generated", wjmPhylloData.generationSpeed,document.querySelector("#generation-speed-slider").parentElement.offsetTop,document.querySelector("#generation-speed-slider").offsetLeft + document.querySelector("#generation-speed-slider").clientWidth + horizOffset);};
+    document.querySelector("#generation-speed-slider").onmouseover = (e) => { wjmLIB.setTooltip("How fast points are generated", wjmPhylloData.generationSpeed,document.querySelector("#generation-speed-slider").parentElement.offsetTop,document.querySelector("#generation-speed-slider").offsetLeft + document.querySelector("#generation-speed-slider").clientWidth + horizOffset);};
     document.querySelector("#generation-speed-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#y-multiplicity-slider").oninput = (e) => { wjmPhylloData.yMultiplicity = e.target.value; valueChanged(); setTooltip("How many times the y value is multiplied by itself (y = N / Y)", wjmPhylloData.yMultiplicity,document.querySelector("#y-multiplicity-slider").parentElement.offsetTop,document.querySelector("#y-multiplicity-slider").offsetLeft + document.querySelector("#y-multiplicity-slider").clientWidth + 25);};
-    document.querySelector("#y-multiplicity-slider").onmouseover = (e) => { setTooltip("How many times the Y value is multiplied by itself (y = N / Y)", wjmPhylloData.yMultiplicity,document.querySelector("#y-multiplicity-slider").parentElement.offsetTop,document.querySelector("#y-multiplicity-slider").offsetLeft + document.querySelector("#y-multiplicity-slider").clientWidth + 25);};
+    document.querySelector("#y-multiplicity-slider").oninput = (e) => { wjmPhylloData.yMultiplicity = e.target.value; valueChanged(); wjmLIB.setTooltip("How many times the y value is multiplied by itself (y = N / Y)", wjmPhylloData.yMultiplicity,document.querySelector("#y-multiplicity-slider").parentElement.offsetTop,document.querySelector("#y-multiplicity-slider").offsetLeft + document.querySelector("#y-multiplicity-slider").clientWidth + horizOffset);};
+    document.querySelector("#y-multiplicity-slider").onmouseover = (e) => { wjmLIB.setTooltip("How many times the Y value is multiplied by itself (y = N / Y)", wjmPhylloData.yMultiplicity,document.querySelector("#y-multiplicity-slider").parentElement.offsetTop,document.querySelector("#y-multiplicity-slider").offsetLeft + document.querySelector("#y-multiplicity-slider").clientWidth + horizOffset);};
     document.querySelector("#y-multiplicity-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#n-multiplicity-slider").oninput = (e) => { wjmPhylloData.nMultiplicity = e.target.value; valueChanged(); setTooltip("How many times the N value is multiplied by itself (y = N / Y)", wjmPhylloData.nMultiplicity,document.querySelector("#n-multiplicity-slider").parentElement.offsetTop,document.querySelector("#n-multiplicity-slider").offsetLeft + document.querySelector("#n-multiplicity-slider").clientWidth + 25);};
-    document.querySelector("#n-multiplicity-slider").onmouseover = (e) => { setTooltip("How many times the N value is multiplied by itself (y = N / Y)", wjmPhylloData.nMultiplicity,document.querySelector("#n-multiplicity-slider").parentElement.offsetTop,document.querySelector("#n-multiplicity-slider").offsetLeft + document.querySelector("#n-multiplicity-slider").clientWidth + 25);};
+    document.querySelector("#n-multiplicity-slider").oninput = (e) => { wjmPhylloData.nMultiplicity = e.target.value; valueChanged(); wjmLIB.setTooltip("How many times the N value is multiplied by itself (y = N / Y)", wjmPhylloData.nMultiplicity,document.querySelector("#n-multiplicity-slider").parentElement.offsetTop,document.querySelector("#n-multiplicity-slider").offsetLeft + document.querySelector("#n-multiplicity-slider").clientWidth + horizOffset);};
+    document.querySelector("#n-multiplicity-slider").onmouseover = (e) => { wjmLIB.setTooltip("How many times the N value is multiplied by itself (y = N / Y)", wjmPhylloData.nMultiplicity,document.querySelector("#n-multiplicity-slider").parentElement.offsetTop,document.querySelector("#n-multiplicity-slider").offsetLeft + document.querySelector("#n-multiplicity-slider").clientWidth + horizOffset);};
     document.querySelector("#n-multiplicity-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#c-value-slider").oninput = (e) => { wjmPhylloData.c = parseFloat(e.target.value); valueChanged(); setTooltip("(Basically) how far apart the particles will be spread", wjmPhylloData.c,document.querySelector("#c-value-slider").parentElement.offsetTop,document.querySelector("#c-value-slider").offsetLeft + document.querySelector("#c-value-slider").clientWidth + 25);};
-    document.querySelector("#c-value-slider").onmouseover = (e) => { setTooltip("(Basically) how far apart the particles will be spread", wjmPhylloData.c,document.querySelector("#c-value-slider").parentElement.offsetTop,document.querySelector("#c-value-slider").offsetLeft + document.querySelector("#c-value-slider").clientWidth + 25);};
+    document.querySelector("#c-value-slider").oninput = (e) => { wjmPhylloData.c = parseFloat(e.target.value); valueChanged(); wjmLIB.setTooltip("(Basically) how far apart the particles will be spread", wjmPhylloData.c,document.querySelector("#c-value-slider").parentElement.offsetTop,document.querySelector("#c-value-slider").offsetLeft + document.querySelector("#c-value-slider").clientWidth + 25);};
+    document.querySelector("#c-value-slider").onmouseover = (e) => { wjmLIB.setTooltip("(Basically) how far apart the particles will be spread", wjmPhylloData.c,document.querySelector("#c-value-slider").parentElement.offsetTop,document.querySelector("#c-value-slider").offsetLeft + document.querySelector("#c-value-slider").clientWidth + 25);};
     document.querySelector("#c-value-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#size-multiplier-slider").oninput = (e) => { wjmPhylloData.sizeScale = e.target.value; valueChanged(); setTooltip("Number that the particle size will be multiplied by", wjmPhylloData.sizeScale,document.querySelector("#size-multiplier-slider").parentElement.offsetTop,document.querySelector("#size-multiplier-slider").offsetLeft + document.querySelector("#size-multiplier-slider").clientWidth + 25);};
-    document.querySelector("#size-multiplier-slider").onmouseover = (e) => { setTooltip("Number that the particle size will be multiplied by", wjmPhylloData.sizeScale,document.querySelector("#size-multiplier-slider").parentElement.offsetTop,document.querySelector("#size-multiplier-slider").offsetLeft + document.querySelector("#size-multiplier-slider").clientWidth + 25);};
+    document.querySelector("#size-multiplier-slider").oninput = (e) => { wjmPhylloData.sizeScale = e.target.value; valueChanged(); wjmLIB.setTooltip("Number that the particle size will be multiplied by", wjmPhylloData.sizeScale,document.querySelector("#size-multiplier-slider").parentElement.offsetTop,document.querySelector("#size-multiplier-slider").offsetLeft + document.querySelector("#size-multiplier-slider").clientWidth + horizOffset);};
+    document.querySelector("#size-multiplier-slider").onmouseover = (e) => { wjmLIB.setTooltip("Number that the particle size will be multiplied by", wjmPhylloData.sizeScale,document.querySelector("#size-multiplier-slider").parentElement.offsetTop,document.querySelector("#size-multiplier-slider").offsetLeft + document.querySelector("#size-multiplier-slider").clientWidth + horizOffset);};
     document.querySelector("#size-multiplier-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#y-offset-slider").oninput = (e) => { wjmPhylloData.yOffset = parseFloat(e.target.value); valueChanged(); setTooltip("How far down the canvas the particles will be placed", wjmPhylloData.yOffset,document.querySelector("#y-offset-slider").parentElement.offsetTop,document.querySelector("#y-offset-slider").offsetLeft + document.querySelector("#y-offset-slider").clientWidth + 25);};
-    document.querySelector("#y-offset-slider").onmouseover = (e) => { setTooltip("How far down the canvas the particles will be placed", wjmPhylloData.yOffset,document.querySelector("#y-offset-slider").parentElement.offsetTop,document.querySelector("#y-offset-slider").offsetLeft + document.querySelector("#y-offset-slider").clientWidth + 25);};
+    document.querySelector("#y-offset-slider").oninput = (e) => { wjmPhylloData.yOffset = parseFloat(e.target.value); valueChanged(); wjmLIB.setTooltip("How far down the canvas the particles will be placed", wjmPhylloData.yOffset,document.querySelector("#y-offset-slider").parentElement.offsetTop,document.querySelector("#y-offset-slider").offsetLeft + document.querySelector("#y-offset-slider").clientWidth + horizOffset);};
+    document.querySelector("#y-offset-slider").onmouseover = (e) => { wjmLIB.setTooltip("How far down the canvas the particles will be placed", wjmPhylloData.yOffset,document.querySelector("#y-offset-slider").parentElement.offsetTop,document.querySelector("#y-offset-slider").offsetLeft + document.querySelector("#y-offset-slider").clientWidth + horizOffset);};
     document.querySelector("#y-offset-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#y-offset-intensity-slider").oninput = (e) => { wjmPhylloData.yOffsetIntensity = parseFloat(e.target.value); valueChanged(); setTooltip("Multiplier for y-value changes", wjmPhylloData.yOffsetIntensity,document.querySelector("#y-offset-intensity-slider").parentElement.offsetTop,document.querySelector("#y-offset-intensity-slider").offsetLeft + document.querySelector("#y-offset-intensity-slider").clientWidth + 25);};
-    document.querySelector("#y-offset-intensity-slider").onmouseover = (e) => { setTooltip("Multiplier for y-value changes", wjmPhylloData.yOffsetIntensity,document.querySelector("#y-offset-intensity-slider").parentElement.offsetTop,document.querySelector("#y-offset-intensity-slider").offsetLeft + document.querySelector("#y-offset-intensity-slider").clientWidth + 25);};
+    document.querySelector("#y-offset-intensity-slider").oninput = (e) => { wjmPhylloData.yOffsetIntensity = parseFloat(e.target.value); valueChanged(); wjmLIB.setTooltip("Multiplier for y-value changes", wjmPhylloData.yOffsetIntensity,document.querySelector("#y-offset-intensity-slider").parentElement.offsetTop,document.querySelector("#y-offset-intensity-slider").offsetLeft + document.querySelector("#y-offset-intensity-slider").clientWidth + horizOffset);};
+    document.querySelector("#y-offset-intensity-slider").onmouseover = (e) => { wjmLIB.setTooltip("Multiplier for y-value changes", wjmPhylloData.yOffsetIntensity,document.querySelector("#y-offset-intensity-slider").parentElement.offsetTop,document.querySelector("#y-offset-intensity-slider").offsetLeft + document.querySelector("#y-offset-intensity-slider").clientWidth + horizOffset);};
     document.querySelector("#y-offset-intensity-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#color-offset-slider").oninput = (e) => { wjmPhylloData.colorOffset = parseFloat(e.target.value); valueChanged(); setTooltip("What hue to start at (0-255)", wjmPhylloData.colorOffset,document.querySelector("#color-offset-slider").parentElement.offsetTop,document.querySelector("#color-offset-slider").offsetLeft + document.querySelector("#color-offset-slider").clientWidth + 25);};
-    document.querySelector("#color-offset-slider").onmouseover = (e) => { setTooltip("What hue to start at (0-255)", wjmPhylloData.colorOffset,document.querySelector("#color-offset-slider").parentElement.offsetTop,document.querySelector("#color-offset-slider").offsetLeft + document.querySelector("#color-offset-slider").clientWidth + 25);};
+    document.querySelector("#color-offset-slider").oninput = (e) => { wjmPhylloData.colorOffset = parseFloat(e.target.value); valueChanged(); wjmLIB.setTooltip("What hue to start at (0-255)", wjmPhylloData.colorOffset,document.querySelector("#color-offset-slider").parentElement.offsetTop,document.querySelector("#color-offset-slider").offsetLeft + document.querySelector("#color-offset-slider").clientWidth + horizOffset);};
+    document.querySelector("#color-offset-slider").onmouseover = (e) => { wjmLIB.setTooltip("What hue to start at (0-255)", wjmPhylloData.colorOffset,document.querySelector("#color-offset-slider").parentElement.offsetTop,document.querySelector("#color-offset-slider").offsetLeft + document.querySelector("#color-offset-slider").clientWidth + horizOffset);};
     document.querySelector("#color-offset-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#color-scale-slider").oninput = (e) => { wjmPhylloData.colorScale = parseFloat(e.target.value); valueChanged(); setTooltip("How fast the color changes (Lower is faster)", wjmPhylloData.colorScale,document.querySelector("#color-scale-slider").parentElement.offsetTop,document.querySelector("#color-scale-slider").offsetLeft + document.querySelector("#color-scale-slider").clientWidth + 25);};
-    document.querySelector("#color-scale-slider").onmouseover = (e) => { setTooltip("How fast the color changes (Lower is faster)", wjmPhylloData.colorScale,document.querySelector("#color-scale-slider").parentElement.offsetTop,document.querySelector("#color-scale-slider").offsetLeft + document.querySelector("#color-scale-slider").clientWidth + 25);};
+    document.querySelector("#color-scale-slider").oninput = (e) => { wjmPhylloData.colorScale = parseFloat(e.target.value); valueChanged(); wjmLIB.setTooltip("How fast the color changes (Lower is faster)", wjmPhylloData.colorScale,document.querySelector("#color-scale-slider").parentElement.offsetTop,document.querySelector("#color-scale-slider").offsetLeft + document.querySelector("#color-scale-slider").clientWidth + horizOffset);};
+    document.querySelector("#color-scale-slider").onmouseover = (e) => { wjmLIB.setTooltip("How fast the color changes (Lower is faster)", wjmPhylloData.colorScale,document.querySelector("#color-scale-slider").parentElement.offsetTop,document.querySelector("#color-scale-slider").offsetLeft + document.querySelector("#color-scale-slider").clientWidth + horizOffset);};
     document.querySelector("#color-scale-slider").onmouseout = (e) => { removeTooltip();};
     
-    document.querySelector("#color-ramp-slider").oninput = (e) => { wjmPhylloData.colorRamp = parseFloat(e.target.value); valueChanged(); setTooltip("How many colors will be used (ie. red -> purple)", wjmPhylloData.colorRamp,document.querySelector("#color-ramp-slider").parentElement.offsetTop,document.querySelector("#color-ramp-slider").offsetLeft + document.querySelector("#color-ramp-slider").clientWidth + 25);};
-    document.querySelector("#color-ramp-slider").onmouseover = (e) => { setTooltip("How many colors will be used (ie. red -> purple)", wjmPhylloData.colorRamp,document.querySelector("#color-ramp-slider").parentElement.offsetTop,document.querySelector("#color-ramp-slider").offsetLeft + document.querySelector("#color-ramp-slider").clientWidth + 25);};
+    document.querySelector("#color-ramp-slider").oninput = (e) => { wjmPhylloData.colorRamp = parseFloat(e.target.value); valueChanged(); wjmLIB.setTooltip("How many colors will be used (ie. red -> purple)", wjmPhylloData.colorRamp,document.querySelector("#color-ramp-slider").parentElement.offsetTop,document.querySelector("#color-ramp-slider").offsetLeft + document.querySelector("#color-ramp-slider").clientWidth + horizOffset);};
+    document.querySelector("#color-ramp-slider").onmouseover = (e) => { wjmLIB.setTooltip("How many colors will be used (ie. red -> purple)", wjmPhylloData.colorRamp,document.querySelector("#color-ramp-slider").parentElement.offsetTop,document.querySelector("#color-ramp-slider").offsetLeft + document.querySelector("#color-ramp-slider").clientWidth + horizOffset);};
     document.querySelector("#color-ramp-slider").onmouseout = (e) => { removeTooltip();};
 }
     
@@ -203,6 +207,9 @@ function setPreset(presetNum)
   case 4:
     preset = wjmPresetFour;
     break;
+  case 5:
+    preset = wjmPresetFive;
+    break;
   default:
     preset = wjmPresetOne;
     }
@@ -224,83 +231,19 @@ function setPreset(presetNum)
     wjmPhylloData.sizeScale = preset.sizeScale;
     wjmPhylloData.sizeChange = preset.sizeChange;
     
-    setupToolVisuals();
+    wjmLIB.setupToolVisuals(wjmPhylloData);
 }
-    
-function setupToolVisuals()
-{
-    //Dropdown menus
-    
-    let tags = ["#generation-type","#divergence","#divergence-change"];
-    let values = [wjmPhylloData.drawType,wjmPhylloData.divergence,wjmPhylloData.divergenceChange]
         
-    for(let j = 0; j < tags.length; j++)
-    {
-        for(let i = 0; i < document.querySelector(tags[j]).options.length; i++)
-        {
-            if(document.querySelector(tags[j]).options[i].value === values[j] || parseFloat(document.querySelector(tags[j]).options[i].value) === parseFloat(values[j]))
-            {
-                document.querySelector(tags[j]).options.selectedIndex = i;
-                break;
-            }
-        }
-    }
-        
-    //Check boxes
-    
-    tags = ["#size-change","#fade-away","#shadow"];
-    values = [wjmPhylloData.sizeChange,wjmPhylloData.fadeAway,wjmPhylloData.shadows]
-    
-    for(let j = 0; j < tags.length; j++)
-    {
-        document.querySelector(tags[j]).checked = values[j];
-    }
-    
-    //Sliders
-    
-    tags = ["#generation-speed-slider","#y-multiplicity-slider","#n-multiplicity-slider",
-            "#c-value-slider","#size-multiplier-slider","#y-offset-slider",
-            "#y-offset-intensity-slider","#color-offset-slider","#color-scale-slider","#color-ramp-slider"];
-    
-    values = [wjmPhylloData.generationSpeed,wjmPhylloData.yMultiplicity,wjmPhylloData.nMultiplicity,
-              wjmPhylloData.c,wjmPhylloData.sizeScale,wjmPhylloData.yOffset,
-              wjmPhylloData.yOffsetIntensity,wjmPhylloData.colorOffset,wjmPhylloData.colorScale,wjmPhylloData.colorRamp]
-    
-    for(let j = 0; j < tags.length; j++)
-    {
-        document.querySelector(tags[j]).value = values[j];
-    }
-    
-}
-    
-function setTooltip(text, value, top, left)
-{
-    let tooltip = document.querySelector("#tooltip");
-    //console.log(`${parseString(document.querySelector("#body-wrapper").width)}px`);
-    tooltip.style.left = `${left}px`;
-    tooltip.style.top = `${top - 22}px`;
-    tooltip.style.display = "block";
-    tooltip.innerHTML = `${text} <br>value: ${value}`;
-}
-    
 function sizeChanged()
 {
     resetPhylloVariables();
     wjmLIB.cls(ctx);
-    canvasHeight = window.innerHeight - 27;
+    canvasHeight = window.innerHeight - vertInset;
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
     ctx.fillRect(0,0,canvasWidth,canvasHeight);
     
-    updateDetailsPanel();
-}
-    
-function updateDetailsPanel()
-{
-    let details = document.querySelector("#details-wrapper");
-    details.style.width = `${window.innerWidth - canvasWidth - 74}px`;
-    details.style.left = `${canvasWidth + 27}px`;
-    details.style.height = `${canvasHeight - 27}px`;
+    wjmLIB.updateDetailsPanel(canvasWidth, canvasHeight, horizInset, vertInset);
 }
     
 function resetPhylloVariables()
